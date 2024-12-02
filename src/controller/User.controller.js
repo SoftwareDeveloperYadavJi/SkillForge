@@ -1,0 +1,56 @@
+import User from "../models/User.model.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import Joi from "joi";
+
+const validateUserInput = (data) => {
+    const schema = Joi.object({
+        name: Joi.string().min(3).required(),
+        email: Joi.string().email().required(),
+        password: Joi.string().min(8).required(),
+    });
+    return schema.validate(data);
+};
+
+export const registerUser = async (req, res) => {
+    const { error } = validateUserInput(req.body);
+    if (error) return res.status(400).json({ message: error.details[0].message });
+
+    if (await User.findOne({ email: req.body.email }))
+        return res.status(400).json({ message: "Email already exists" });
+
+
+    const { name, email, password } = req.body;
+    try {
+        const user = new User({ name, email, password });
+        const savedUser = await user.save();
+        res.status(201).json({ message: "User registered successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error saving user" });
+    }
+};
+
+export const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.findOne({ email }).select("+password");
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+        if (!isPasswordMatch) return res.status(401).json({ message: "Invalid password" });
+
+        const token = jwt.sign(
+            { _id: user._id, email: user.email },
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+        );
+        res.status(200).json({ token });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+};
+
+
