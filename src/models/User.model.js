@@ -44,6 +44,14 @@ const userSchema = new mongoose.Schema({
     rating: {
         type: mongoose.Schema.Types.Mixed, // Allows both String and Number
         default: "Not Rated",
+    },
+    createdCourses: {
+        type:[ mongoose.Schema.ObjectId],
+        ref: "Course"
+    },
+    enroledCourses: {
+        type:[mongoose.Schema.ObjectId],
+        ref: "Course"
     }
 });
 

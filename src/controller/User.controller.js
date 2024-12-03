@@ -73,4 +73,15 @@ export const userProfileUpdate = async (req, res) =>{
 }
 
 
+export const getUserProfile = async (req, res) =>{
+    try{
+        const user = await User.findById(req.user._id);
+        res.status(200).json(user);
+    }catch{
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
+
 
