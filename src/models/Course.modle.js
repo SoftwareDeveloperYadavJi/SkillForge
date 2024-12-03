@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const courseSchema = new mongoose.Schema({
     id: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
         ref: "User"
     },
     title:{
@@ -20,6 +19,10 @@ const courseSchema = new mongoose.Schema({
                 type:String,
                 required:true
             },
+            thumbnailURL:{
+                type:String,
+                required:true
+            },
             videoURL:{
                 type:String,
                 requried:true
@@ -33,7 +36,8 @@ const courseSchema = new mongoose.Schema({
     ],
     creator:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"User"
+        ref:"User",
+        required:true
     },
     rating:[
         {

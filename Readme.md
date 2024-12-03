@@ -4,8 +4,6 @@ A decentralized micro-skilling platform where individuals can teach or learn mic
 
 
 
-
-
 ## About SkillForge
 
 - A simple skill based platform for learning and sharing knowledge.
