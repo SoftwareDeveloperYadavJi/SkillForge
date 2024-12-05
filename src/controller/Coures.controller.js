@@ -23,3 +23,18 @@ export const createCourse = async (req, res) => {
 }
 
 
+
+
+// fetch all courses
+export const getAllCourses = async (req, res) =>{
+    try {
+        const cource = await Course.find({});
+        res.status(200).json({ courses: cource });
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+
