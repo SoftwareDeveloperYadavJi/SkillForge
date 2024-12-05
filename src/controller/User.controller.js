@@ -83,5 +83,12 @@ export const getUserProfile = async (req, res) =>{
     }
 }
 
+// export const purchesedCourse = async (req, res) =>{
+//     const courcesId = req.params.id;
+//     try{
 
+//     }catch{
+
+//     }
+// }
 
