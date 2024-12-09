@@ -1,4 +1,4 @@
-import { ref, types } from "joi";
+
 import mongoose from "mongoose";
 
 const courseSchema = new mongoose.Schema({
@@ -55,13 +55,6 @@ const courseSchema = new mongoose.Schema({
         type:Number,
         default:0
     },
-    purchesed:[
-        {
-            types:mongoose.Schema.Types.ObjectId,
-            ref:"Course"
-        }
-        
-    ]
     
 }, { timestamps: true });
 
